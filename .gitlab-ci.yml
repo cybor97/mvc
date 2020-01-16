@@ -1,0 +1,21 @@
+image: "node:12.14"
+
+before_script:
+  - apt-get update
+  - apt-get install -y zip unzip
+  - 'which ssh-agent || apt install openssh-client -y'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+
+install:
+  script:
+    - npx apidoc -e node_modules -e doc
+    - rm -rf node_modules
+    - zip -r cybor97_mvc.zip ./
+    - scp -oStrictHostKeyChecking=no cybor97_mvc.zip ${ssh_connection}:cybor97_mvc.zip;
+    - scp -oStrictHostKeyChecking=no install.sh ${ssh_connection}:install.sh;
+    - ssh -oStrictHostKeyChecking=no ${ssh_connection} <<< $'./install.sh';
+

@@ -1,0 +1,31 @@
+{
+  "name": "cybor97_mvc",
+  "version": "0.0.1",
+  "description": "cybor97_mvc Backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cybor97_mvc",
+    "cybor97_mvc_backend"
+  ],
+  "author": "cybor97",
+  "license": "ISC",
+  "dependencies": {
+    "@pm2/io": "^4.3.3",
+    "apidoc": "^0.19.1",
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.0.2",
+    "ocr": "^4.0.26",
+    "sequelize": "^5.21.3",
+    "windows-1251": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2"
+  }
+}
