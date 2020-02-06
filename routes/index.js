@@ -4,6 +4,9 @@ const express = require('express');
 const IRoute = require('./routeLists/IRoute');
 const IController = require('../controllers/IController');
 const Logger = require('../utils/Logger');
+const { ValidationError } = require('../utils/Errors');
+
+require('../utils/expressAsyncErrors');
 
 const PATH_ROUTES = './routeLists';
 const PATH_CONTROLLERS = '../controllers'
@@ -114,6 +117,18 @@ class Routes {
                 Logger.warn(`Method ${methodName} type ${methodRecord.type} is unsupported!`);
             }
         }
+
+        this.express.use(async (err, req, res, next) => {
+            Logger.err(err);
+            if (err instanceof ValidationError) {
+                return res.status(400).send({ message: err.message });
+            }
+
+            return res.status(500).send({
+                message: err.message,
+                stack: err.stack
+            });
+        });
 
         this.express.use((req, res, next) => { res.send({ status: 404, data: 'Route not found!' }) });
 
